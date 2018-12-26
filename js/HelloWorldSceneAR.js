@@ -1,27 +1,15 @@
-"use strict";
-
 import React, { Component } from "react";
-
 import { StyleSheet } from "react-native";
-
 import { ViroARScene, ViroText, ViroConstants } from "react-viro";
 
 export default class HelloWorldSceneAR extends Component {
-  constructor() {
-    super();
-
-    // Set initial state here
-    this.state = {
-      text: "Initializing AR..."
-    };
-
-    // bind 'this' to functions
-    this._onInitialized = this._onInitialized.bind(this);
+  state = {
+    text: 'Initializing SKVNGR...'
   }
 
   render() {
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized}>
+      <ViroARScene onTrackingUpdated={this.onInitialized}>
         <ViroText
           text={this.state.text}
           scale={[0.5, 0.5, 0.5]}
@@ -32,7 +20,7 @@ export default class HelloWorldSceneAR extends Component {
     );
   }
 
-  _onInitialized(state, reason) {
+  onInitialized = (state, reason) => {
     if (state == ViroConstants.TRACKING_NORMAL) {
       this.setState({
         text: "novatics!"
@@ -43,7 +31,7 @@ export default class HelloWorldSceneAR extends Component {
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: "Arial",
     fontSize: 30,
@@ -52,5 +40,3 @@ var styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-module.exports = HelloWorldSceneAR;
