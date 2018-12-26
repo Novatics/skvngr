@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import {
   ViroARScene,
-  ViroAnimations,
   Viro3DObject,
   ViroARImageMarker,
   ViroARTrackingTargets,
-  ViroSpotLight
+  ViroAmbientLight
 } from "react-viro";
 
 ViroARTrackingTargets.createTargets({
@@ -29,28 +28,9 @@ export default class HelloWorldSceneAR extends Component {
             type="OBJ"
           />
 
-          <ViroSpotLight
-            innerAngle={5}
-            outerAngle={25}
-            direction={[0, -1, 0]}
-            position={[0, 5, 1]}
-            color="#ffffff"
-            castsShadow={true}
-            shadowMapSize={2048}
-            shadowNearZ={2}
-            shadowFarZ={7}
-            shadowOpacity={0.7}
-          />
+          <ViroAmbientLight color="#ffffff" />
         </ViroARImageMarker>
       </ViroARScene>
     );
   }
 }
-
-ViroARTrackingTargets.createTargets({
-  logo: {
-    source: require("./res/logo.png"),
-    orientation: "Up",
-    physicalWidth: 0.165 // real world width in meters
-  }
-});
