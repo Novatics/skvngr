@@ -10,7 +10,6 @@ export default function Skvngr() {
       apiKey={API_KEY}
       initialScene={{ scene: InitialARScene }}
       autofocus
-      hdrEnabled
     />
   );
 }
