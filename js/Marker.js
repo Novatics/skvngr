@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { ViroARImageMarker, Viro3DObject } from "react-viro";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ViroARImageMarker, Viro3DObject } from 'react-viro';
 
 const origin = {
   x: 0,
@@ -15,8 +15,8 @@ const SourceType = PropTypes.oneOfType([
 
 export default class Marker extends React.Component {
   static propTypes = {
-    source: SourceType,
-    resources: PropTypes.arrayOf(SourceType),
+    source: SourceType.isRequired,
+    resources: PropTypes.arrayOf(SourceType).isRequired,
   };
 
   state = {
@@ -48,7 +48,7 @@ export default class Marker extends React.Component {
       >
         <Viro3DObject
           animation={{
-            name: more60 ? "rotateOverZ" : "rotateOverY",
+            name: more60 ? 'rotateOverZ' : 'rotateOverY',
             run: true,
             loop: true,
           }}
