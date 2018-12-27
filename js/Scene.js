@@ -31,15 +31,27 @@ export default class Scene extends Component {
       y: 0,
       z: 0,
     },
+    position: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
   };
 
   updateAnchorRotation = anchor => {
     const [x, y, z] = anchor.rotation;
     this.setState({ rotation: { x, y, z } });
+
+    if (x > 60) {
+      this.setState({ position: { x: 0, y: 0, z: -0.1 } });
+    }
+    if (x < 30) {
+      this.setState({ position: { x: 0, y: 0.1, z: 0 } });
+    }
   };
 
   render() {
-    const { rotation } = this.state;
+    const { rotation, position } = this.state;
     return (
       <ViroARScene displayPointCloud>
         <ViroAmbientLight color="#ffffff" />
@@ -51,7 +63,7 @@ export default class Scene extends Component {
           <Viro3DObject
             rotation={[-rotation.x, 0, 0]}
             scale={[0.0005, 0.0005, 0.0005]}
-            position={[0, 0.1, 0]}
+            position={[position.x, position.y, position.z]}
             source={require("./res/marca.obj")}
             resources={[require("./res/marca.mtl")]}
             type="OBJ"
