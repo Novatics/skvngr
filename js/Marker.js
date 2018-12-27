@@ -1,6 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ViroARImageMarker, Viro3DObject } from "react-viro";
+import {
+  ViroARImageMarker,
+  Viro3DObject,
+  ViroSpotLight,
+  ViroBox,
+  ViroMaterials,
+  ViroQuad,
+} from "react-viro";
 
 const origin = {
   x: 0,
@@ -46,18 +53,48 @@ export default class Marker extends React.Component {
         onAnchorFound={this.updateAnchorRotation}
         onAnchorUpdated={this.updateAnchorRotation}
       >
+        <ViroSpotLight
+          color="#ffffff"
+          // attenuationStartDistance={2}
+          // attenuationEndDistance={2}
+          position={[0, 5, 0]}
+          direction={[0, -0.01, 0]}
+          castsShadow
+          shadowMapSize={200000}
+          shadowNearZ={2}
+          shadowFarZ={7}
+          shadowOpacity={0.5}
+        />
         <Viro3DObject
-          animation={{
-            name: more60 ? "rotateOverZ" : "rotateOverY",
-            run: true,
-            loop: true,
-          }}
-          rotation={[-rotation.x, 0, 0]}
+          onClick={() => alert("Sou a sua energia!! ")}
+          rotation={[-rotation.x, -rotation.y + 180, -rotation.z]}
           scale={[0.005, 0.005, 0.005]}
           position={[position.x, position.y, position.z]}
           source={source}
           resources={resources}
           type="OBJ"
+        />
+
+        <Viro3DObject
+          onClick={() => alert("Sou a sua energia!! ")}
+          animation={{
+            name: more60 ? "rotateOverZ" : "rotateOverY",
+            run: true,
+            loop: true,
+          }}
+          rotation={[-rotation.x, -rotation.y, -rotation.z]}
+          scale={[0.005, 0.005, 0.005]}
+          position={[position.x, position.y, position.z]}
+          source={require("./res/forma1.obj")}
+          resources={[require("./res/forma1.mtl")]}
+          type="OBJ"
+        />
+        <ViroQuad
+          rotation={[-90, 0, 0]}
+          position={[0, -0.001, 0]}
+          width={1}
+          height={1}
+          arShadowReceiver={true}
         />
       </ViroARImageMarker>
     );

@@ -29,11 +29,11 @@ ViroAnimations.registerAnimations({
 
 export default function Scene() {
   return (
-    <ViroARScene displayPointCloud>
-      <ViroAmbientLight color="#ffffff" />
+    <ViroARScene>
+      <ViroAmbientLight color="#aaaaaa" />
       <Marker
-        source={require("./res/cafe.obj")}
-        resource={[require("./res/cafe.mtl")]}
+        source={require("./res/xicara.obj")}
+        resource={[require("./res/xicara.mtl")]}
       />
     </ViroARScene>
   );
