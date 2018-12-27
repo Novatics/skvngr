@@ -5,6 +5,7 @@ import {
   Viro3DObject,
   ViroAnimations,
   ViroQuad,
+  ViroSpotLight,
 } from 'react-viro';
 
 const SourceType = PropTypes.oneOfType([
@@ -41,8 +42,8 @@ export default class Marker extends React.Component {
   };
 
   updateAnchorRotation = anchor => {
-    const [x] = anchor.rotation.map(Math.floor);
-    this.setState({ rotation: x });
+    const [x] = anchor.rotation;
+    this.setState({ rotation: Math.floor(x) });
   };
 
   paperAngle = () => {
@@ -54,23 +55,19 @@ export default class Marker extends React.Component {
   };
 
   animationName = () => {
-    switch (this.paperAngle()) {
-      case PaperAngle.High:
-        return 'rotateOverZ';
-      default:
-        return 'rotateOverY';
+    if (this.paperAngle() === PaperAngle.High) {
+      return 'rotateOverZ';
     }
+
+    return 'rotateOverY';
   };
 
   position = () => {
-    switch (this.paperAngle()) {
-      case PaperAngle.High:
-        return [0, 0, -0.1];
-      case PaperAngle.Medium:
-        return [0, 0.1, 0];
-      default:
-        return [0, 0, 0];
+    if (this.paperAngle() === PaperAngle.High) {
+      return [0, 0, -0.1];
     }
+
+    return [0, 0.1, 0];
   };
 
   render() {
@@ -94,17 +91,15 @@ export default class Marker extends React.Component {
           shadowOpacity={0.5}
         />
         <Viro3DObject
-          onClick={() => alert('Sou a sua energia!! ')}
           rotation={[-rotation.x, -rotation.y + 180, -rotation.z]}
           scale={[0.005, 0.005, 0.005]}
-          position={[position.x, position.y, position.z]}
+          position={this.position()}
           source={source}
           resources={resources}
           type="OBJ"
         />
 
         <Viro3DObject
-          onClick={() => alert('Sou a sua energia!! ')}
           animation={{
             name: this.animationName(),
             run: true,
