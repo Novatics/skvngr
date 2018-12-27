@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   ViroARScene,
-  Viro3DObject,
-  ViroARImageMarker,
   ViroARTrackingTargets,
   ViroAmbientLight,
   ViroAnimations,
@@ -24,18 +22,18 @@ ViroAnimations.registerAnimations({
     duration: 3000,
   },
   rotateOverZ: {
-    properties: { rotateZ: "+=270" },
+    properties: { rotateZ: "-=270" },
     duration: 3000,
   },
 });
 
 export default function Scene() {
   return (
-    <ViroARScene displayPointCloud={NODE_ENV !== "production"}>
+    <ViroARScene displayPointCloud>
       <ViroAmbientLight color="#ffffff" />
       <Marker
-        source={require("./res/marca.obj")}
-        resource={[require("./res/marca.mtl")]}
+        source={require("./res/cafe.obj")}
+        resource={[require("./res/cafe.mtl")]}
       />
     </ViroARScene>
   );

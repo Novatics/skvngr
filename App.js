@@ -8,6 +8,7 @@ export default function Skvngr() {
   return (
     <ViroARSceneNavigator
       apiKey={API_KEY}
+      bloomEnabled
       initialScene={{ scene: Scene }}
       autofocus
     />

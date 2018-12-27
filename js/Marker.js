@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ViroARImageMarker, Viro3DObject } from "react-viro";
 
 const origin = {
   x: 0,
@@ -52,7 +53,7 @@ export default class Marker extends React.Component {
             loop: true,
           }}
           rotation={[-rotation.x, 0, 0]}
-          scale={[0.0005, 0.0005, 0.0005]}
+          scale={[0.005, 0.005, 0.005]}
           position={[position.x, position.y, position.z]}
           source={source}
           resources={resources}
