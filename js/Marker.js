@@ -1,53 +1,85 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   ViroARImageMarker,
   Viro3DObject,
-  ViroSpotLight,
+  ViroAnimations,
   ViroQuad,
-} from "react-viro";
-
-const origin = {
-  x: 0,
-  y: 0,
-  z: 0,
-};
+} from 'react-viro';
 
 const SourceType = PropTypes.oneOfType([
   PropTypes.shape({ uri: PropTypes.string }),
   PropTypes.number, // binary
 ]);
 
+const PaperAngle = {
+  Small: 0,
+  Medium: 1,
+  High: 2,
+};
+
+ViroAnimations.registerAnimations({
+  rotateOverY: {
+    properties: { rotateY: '+=270' },
+    duration: 3000,
+  },
+  rotateOverZ: {
+    properties: { rotateZ: '-=270' },
+    duration: 3000,
+  },
+});
+
 export default class Marker extends React.Component {
   static propTypes = {
+    target: PropTypes.string.isRequired,
     source: SourceType.isRequired,
     resources: PropTypes.arrayOf(SourceType).isRequired,
   };
 
   state = {
-    more60: false,
-    rotation: origin,
-    position: origin,
+    rotation: 0,
   };
 
   updateAnchorRotation = anchor => {
-    const [x, y, z] = anchor.rotation.map(Math.floor);
-    this.setState({ rotation: { x, y, z } });
+    const [x] = anchor.rotation.map(Math.floor);
+    this.setState({ rotation: x });
+  };
 
-    if (x > 60) {
-      this.setState({ position: { x: 0, y: 0, z: -0.1 }, more60: true });
+  paperAngle = () => {
+    const { rotation } = this.state;
+
+    if (rotation > 60) return PaperAngle.High;
+    if (rotation > 30) return PaperAngle.Medium;
+    return PaperAngle.Small;
+  };
+
+  animationName = () => {
+    switch (this.paperAngle()) {
+      case PaperAngle.High:
+        return 'rotateOverZ';
+      default:
+        return 'rotateOverY';
     }
-    if (x < 30) {
-      this.setState({ position: { x: 0, y: 0.1, z: 0 }, more60: false });
+  };
+
+  position = () => {
+    switch (this.paperAngle()) {
+      case PaperAngle.High:
+        return [0, 0, -0.1];
+      case PaperAngle.Medium:
+        return [0, 0.1, 0];
+      default:
+        return [0, 0, 0];
     }
   };
 
   render() {
-    const { resources, source } = this.props;
-    const { rotation, position, more60 } = this.state;
+    const { resources, source, target } = this.props;
+    const { rotation } = this.state;
+
     return (
       <ViroARImageMarker
-        target="qrcode"
+        target={target}
         onAnchorFound={this.updateAnchorRotation}
         onAnchorUpdated={this.updateAnchorRotation}
       >
@@ -62,7 +94,7 @@ export default class Marker extends React.Component {
           shadowOpacity={0.5}
         />
         <Viro3DObject
-          onClick={() => alert("Sou a sua energia!! ")}
+          onClick={() => alert('Sou a sua energia!! ')}
           rotation={[-rotation.x, -rotation.y + 180, -rotation.z]}
           scale={[0.005, 0.005, 0.005]}
           position={[position.x, position.y, position.z]}
@@ -72,17 +104,17 @@ export default class Marker extends React.Component {
         />
 
         <Viro3DObject
-          onClick={() => alert("Sou a sua energia!! ")}
+          onClick={() => alert('Sou a sua energia!! ')}
           animation={{
-            name: more60 ? 'rotateOverZ' : 'rotateOverY',
+            name: this.animationName(),
             run: true,
             loop: true,
           }}
           rotation={[-rotation.x, -rotation.y, -rotation.z]}
           scale={[0.005, 0.005, 0.005]}
-          position={[position.x, position.y, position.z]}
-          source={require("./res/forma1.obj")}
-          resources={[require("./res/forma1.mtl")]}
+          position={this.position()}
+          source={source}
+          resources={resources}
           type="OBJ"
         />
         <ViroQuad
@@ -90,7 +122,7 @@ export default class Marker extends React.Component {
           position={[0, -0.001, 0]}
           width={1}
           height={1}
-          arShadowReceiver={true}
+          arShadowReceiver
         />
       </ViroARImageMarker>
     );

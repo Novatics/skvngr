@@ -3,7 +3,6 @@ import {
   ViroARScene,
   ViroARTrackingTargets,
   ViroAmbientLight,
-  ViroAnimations,
 } from 'react-viro';
 
 import Marker from './Marker';
@@ -16,22 +15,12 @@ ViroARTrackingTargets.createTargets({
   },
 });
 
-ViroAnimations.registerAnimations({
-  rotateOverY: {
-    properties: { rotateY: '+=270' },
-    duration: 3000,
-  },
-  rotateOverZ: {
-    properties: { rotateZ: '-=270' },
-    duration: 3000,
-  },
-});
-
 export default function Scene() {
   return (
     <ViroARScene>
       <ViroAmbientLight color="#aaaaaa" />
       <Marker
+        target="qrcode"
         source={require('./res/cafe.obj')}
         resource={[require('./res/cafe.mtl')]}
       />
