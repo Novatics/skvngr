@@ -14,7 +14,7 @@ export default class HelloWorldSceneAR extends Component {
 
   constructor() {
     super();
-    this.assetLoader = new AssetLoader('https://skvngr-server.herokuapp.com');
+  assetLoader = new AssetLoader('https://skvngr-server.herokuapp.com');
   }
 
   createTargetsFromImages = async () => {
