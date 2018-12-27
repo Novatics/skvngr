@@ -4,15 +4,29 @@ export default class AssetLoader {
   }
 
   async loadTargets() {
-    const res = await fetch(`${this.remoteUrl}/markers`);
-    const markers = await res.json();
+    const res = await fetch(`${this.remoteUrl}/targets`);
+    const remoteTargets = await res.json();
     const targets = {};
     
-    for (marker of markers) {
-      targets[marker.name] = { orientation, physicalWidth } = marker;
-      targets[marker.name].source = { uri: marker.source };
+    for (remoteTarget of remoteTargets) {
+      targets[remoteTarget.name] = { orientation, physicalWidth } = remoteTarget;
+      targets[remoteTarget.name].source = { uri: remoteTarget.source };
     }
 
     return targets;
+  }
+
+  async loadMarkers() {
+    const res = await fetch(`${this.remoteUrl}/markers`);
+    const remoteMarkers = await res.json();
+    const markers = remoteMarkers.map(({target, source, resources}) => {
+      return {
+        target,
+        source: { uri: source },
+        resource: resources.map(r => ({ uri: r })),
+      }
+    });
+
+    return markers;
   }
 }
