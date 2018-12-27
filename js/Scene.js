@@ -31,9 +31,12 @@ ViroAnimations.registerAnimations({
 
 export default function Scene() {
   return (
-    <ViroARScene displayPointCloud>
+    <ViroARScene displayPointCloud={NODE_ENV !== "production"}>
       <ViroAmbientLight color="#ffffff" />
-      <Marker />
+      <Marker
+        source={require("./res/marca.obj")}
+        resource={[require("./res/marca.mtl")]}
+      />
     </ViroARScene>
   );
 }

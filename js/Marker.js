@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const origin = {
   x: 0,
@@ -6,7 +7,17 @@ const origin = {
   z: 0,
 };
 
+const SourceType = PropTypes.oneOfType([
+  PropTypes.shape({ uri: PropTypes.string }),
+  PropTypes.number, // binary
+]);
+
 export default class Marker extends React.Component {
+  static propTypes = {
+    source: SourceType,
+    resources: PropTypes.arrayOf(SourceType),
+  };
+
   state = {
     more60: false,
     rotation: origin,
@@ -26,6 +37,7 @@ export default class Marker extends React.Component {
   };
 
   render() {
+    const { resources, source } = this.props;
     const { rotation, position, more60 } = this.state;
     return (
       <ViroARImageMarker
@@ -42,8 +54,8 @@ export default class Marker extends React.Component {
           rotation={[-rotation.x, 0, 0]}
           scale={[0.0005, 0.0005, 0.0005]}
           position={[position.x, position.y, position.z]}
-          source={require("./res/marca.obj")}
-          resources={[require("./res/marca.mtl")]}
+          source={source}
+          resources={resources}
           type="OBJ"
         />
       </ViroARImageMarker>
