@@ -6,6 +6,7 @@ import {
   ViroARTrackingTargets,
   ViroAmbientLight,
   ViroAnimations,
+  ViroNode,
 } from "react-viro";
 
 ViroARTrackingTargets.createTargets({
@@ -23,7 +24,7 @@ ViroAnimations.registerAnimations({
   },
 });
 
-export default class HelloWorldSceneAR extends Component {
+export default class Scene extends Component {
   state = {
     rotation: {
       x: 0,
@@ -36,26 +37,24 @@ export default class HelloWorldSceneAR extends Component {
     const [x, y, z] = anchor.rotation;
     this.setState({ rotation: { x, y, z } });
   };
+
   render() {
     const { rotation } = this.state;
-
     return (
       <ViroARScene displayPointCloud>
         <ViroAmbientLight color="#ffffff" />
         <ViroARImageMarker
           target="qrcode"
           onAnchorFound={this.updateAnchorRotation}
-          onAnchorUpdate={this.updateAnchorRotation}
-          pauseUpdates
+          onAnchorUpdated={this.updateAnchorRotation}
         >
           <Viro3DObject
-            rotation={[rotation.x, rotation.y, rotation.z]}
-            scale={[0.001, 0.001, 0.001]}
-            animation={{ name: "rotate", run: true, loop: true }}
-            position={[0, 0.1, 0]}
-            source={require("./res/brand.obj")}
-            resources={[require("./res/brand.mtl")]}
+            rotation={[-rotation.x, 0, 0]}
             scale={[0.0005, 0.0005, 0.0005]}
+            position={[0, 0.1, 0]}
+            source={require("./res/marca.obj")}
+            resources={[require("./res/marca.mtl")]}
+            type="OBJ"
           />
         </ViroARImageMarker>
       </ViroARScene>
