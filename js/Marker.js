@@ -4,8 +4,6 @@ import {
   ViroARImageMarker,
   Viro3DObject,
   ViroSpotLight,
-  ViroBox,
-  ViroMaterials,
   ViroQuad,
 } from "react-viro";
 
@@ -22,8 +20,8 @@ const SourceType = PropTypes.oneOfType([
 
 export default class Marker extends React.Component {
   static propTypes = {
-    source: SourceType,
-    resources: PropTypes.arrayOf(SourceType),
+    source: SourceType.isRequired,
+    resources: PropTypes.arrayOf(SourceType).isRequired,
   };
 
   state = {
@@ -55,8 +53,6 @@ export default class Marker extends React.Component {
       >
         <ViroSpotLight
           color="#ffffff"
-          // attenuationStartDistance={2}
-          // attenuationEndDistance={2}
           position={[0, 5, 0]}
           direction={[0, -0.01, 0]}
           castsShadow
@@ -78,7 +74,7 @@ export default class Marker extends React.Component {
         <Viro3DObject
           onClick={() => alert("Sou a sua energia!! ")}
           animation={{
-            name: more60 ? "rotateOverZ" : "rotateOverY",
+            name: more60 ? 'rotateOverZ' : 'rotateOverY',
             run: true,
             loop: true,
           }}
