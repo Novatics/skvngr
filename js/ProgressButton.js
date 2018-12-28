@@ -32,8 +32,8 @@ export default function ProgressButton({ total, current }) {
         borderWidth={stripeWidth}
         fill={current}
         color="#f4816a"
-        bgColor="#9D99A8"
-        shadowColor="rgba(60, 51, 82, 0.6)"
+        bgColor="#3C3352"
+        shadowColor="rgba(60, 51, 82, 0.5)"
         containerStyle={{
           flexDirection: 'row',
           alignItems: 'flex-end',
