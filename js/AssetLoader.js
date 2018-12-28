@@ -23,7 +23,7 @@ export default class AssetLoader {
       return {
         target,
         source: { uri: source },
-        resource: resources.map(r => ({ uri: r })),
+        resources: resources.map(r => ({ uri: r })),
       }
     });
 
