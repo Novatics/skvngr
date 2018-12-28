@@ -6,18 +6,19 @@ export default class AssetLoader {
   async loadTargets() {
     const res = await fetch(`${this.remoteUrl}/targets`);
     const remoteTargets = await res.json();
+    const targets = {};
 
-    return Object.values(remoteTargets)
-      .map(({ name, orientation, physicalWidth, source }) => ({
-        name,
-        orientation,
-        physicalWidth,
-        source: { uri: source },
-      }))
-      .reduce(
-        (object, { name, ...target }) => ({ ...object, [name]: target }),
-        {},
-      );
+    Object.values(remoteTargets).forEach(
+      ({ name, orientation, physicalWidth, source }) => {
+        targets[name] = {
+          orientation,
+          physicalWidth,
+          source: { uri: source },
+        };
+      },
+    );
+
+    return targets;
   }
 
   async loadMarkers() {
