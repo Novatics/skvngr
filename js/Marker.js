@@ -91,7 +91,7 @@ export default class Marker extends React.Component {
           shadowOpacity={0.5}
         />
         <Viro3DObject
-          rotation={[-rotation.x, -rotation.y + 180, -rotation.z]}
+          rotation={[-rotation, 180, 0]}
           scale={[0.005, 0.005, 0.005]}
           position={this.position()}
           source={source}
@@ -105,7 +105,7 @@ export default class Marker extends React.Component {
             run: true,
             loop: true,
           }}
-          rotation={[-rotation.x, -rotation.y, -rotation.z]}
+          rotation={[-rotation, 0, 0]}
           scale={[0.005, 0.005, 0.005]}
           position={this.position()}
           source={source}
