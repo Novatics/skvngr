@@ -13,9 +13,9 @@ export default class Scene extends Component {
 
   state = {
     markers: [],
-  }
+  };
 
-  async componentDidMount() {  
+  async componentDidMount() {
     const targets = await this.assetLoader.loadTargets();
     ViroARTrackingTargets.createTargets(targets);
 
@@ -28,18 +28,16 @@ export default class Scene extends Component {
     return (
       <ViroARScene>
         <ViroAmbientLight color="#aaaaaa" />
-        {
-          markers.map(marker => {
-            return (
-              <Marker
-                key={marker.target}
-                target={marker.target}
-                source={marker.source}
-                resources={marker.resources}
-              />
-            )
-          })
-        }
+        {markers.map(marker => {
+          return (
+            <Marker
+              key={marker.target}
+              target={marker.target}
+              source={marker.source}
+              resources={marker.resources}
+            />
+          );
+        })}
       </ViroARScene>
     );
   }
