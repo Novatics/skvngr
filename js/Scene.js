@@ -28,16 +28,14 @@ export default class Scene extends Component {
     return (
       <ViroARScene>
         <ViroAmbientLight color="#aaaaaa" />
-        {markers.map(marker => {
-          return (
-            <Marker
-              key={marker.target}
-              target={marker.target}
-              source={marker.source}
-              resources={marker.resources}
-            />
-          );
-        })}
+        {markers.map(marker => (
+          <Marker
+            key={marker.target}
+            target={marker.target}
+            source={marker.source}
+            resources={marker.resources}
+          />
+        ))}
       </ViroARScene>
     );
   }
