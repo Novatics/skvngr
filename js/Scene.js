@@ -1,29 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   ViroARScene,
   ViroARTrackingTargets,
   ViroAmbientLight,
 } from 'react-viro';
 
+import AssetLoader from './AssetLoader';
 import Marker from './Marker';
 
-ViroARTrackingTargets.createTargets({
-  qrcode: {
-    source: require('./res/qrcode.png'),
-    orientation: 'Up',
-    physicalWidth: 0.1,
-  },
-});
+export default class Scene extends Component {
+  assetLoader = new AssetLoader('https://skvngr-server.herokuapp.com');
 
-export default function Scene() {
-  return (
-    <ViroARScene>
-      <ViroAmbientLight color="#aaaaaa" />
-      <Marker
-        target="qrcode"
-        source={require('./res/coffee.obj')}
-        resource={[require('./res/coffee.mtl')]}
-      />
-    </ViroARScene>
-  );
+  state = {
+    markers: [],
+  }
+
+  async componentDidMount() {  
+    const targets = await this.assetLoader.loadTargets();
+    ViroARTrackingTargets.createTargets(targets);
+
+    const markers = await this.assetLoader.loadMarkers();
+    this.setState({ markers });
+  }
+
+  render() {
+    const { markers } = this.state;
+    return (
+      <ViroARScene>
+        <ViroAmbientLight color="#aaaaaa" />
+        {
+          markers.map(marker => {
+            return (
+              <Marker
+                key={marker.target}
+                target={marker.target}
+                source={marker.source}
+                resources={marker.resources}
+              />
+            )
+          })
+        }
+      </ViroARScene>
+    );
+  }
 }
