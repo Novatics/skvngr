@@ -22,7 +22,7 @@ export default function Scene() {
       <Marker
         target="qrcode"
         source={require('./res/coffee.obj')}
-        resource={[require('./res/coffee.mtl')]}
+        resources={[require('./res/coffee.mtl')]}
       />
     </ViroARScene>
   );

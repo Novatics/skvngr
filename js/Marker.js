@@ -29,19 +29,16 @@ ViroAnimations.registerAnimations({
     duration: 3000,
   },
   shrink: {
-    properties: { scaleX: 0, scaleY: 0, scaleZ: 0, opacity: 0  },
+    properties: { scaleX: 0, scaleY: 0, scaleZ: 0, opacity: 0 },
     duration: 500,
-    easing: 'EaseInEaseOut'
-
+    easing: 'EaseInEaseOut',
   },
   grow: {
     properties: { scaleX: '*=1.1', scaleY: '*=1.1', scaleZ: '*=1.1' },
     duration: 100,
-    easing: 'EaseInEaseOut'
+    easing: 'EaseInEaseOut',
   },
-  closing:[
-    ["grow", "shrink"],
-  ]
+  closing: [['grow', 'shrink']],
 });
 
 export default class Marker extends React.Component {
@@ -53,8 +50,8 @@ export default class Marker extends React.Component {
 
   state = {
     rotation: 0,
-    closing: false
-    };
+    closing: false,
+  };
 
   updateAnchorRotation = anchor => {
     const [x] = anchor.rotation;
@@ -70,17 +67,16 @@ export default class Marker extends React.Component {
   };
 
   animationName = () => {
-    if(this.state.closing) {
-      return 'closing'
+    const { closing } = this.state;
+    if (closing) {
+      return 'closing';
     }
-    
 
-    if (this.paperAngle() === PaperAngle.High){ 
+    if (this.paperAngle() === PaperAngle.High) {
       return 'rotateOverZ';
     }
-    
+
     return 'rotateOverY';
-    
   };
 
   position = () => {
@@ -92,8 +88,8 @@ export default class Marker extends React.Component {
   };
 
   getObject = () => {
-    this.setState({ closing: true});
-  }
+    this.setState({ closing: true });
+  };
 
   render() {
     const { resources, source, target } = this.props;
@@ -115,7 +111,7 @@ export default class Marker extends React.Component {
           shadowFarZ={7}
           shadowOpacity={0.5}
         />
-    
+
         <Viro3DObject
           opacity={1}
           onClick={() => this.getObject()}
@@ -124,7 +120,9 @@ export default class Marker extends React.Component {
             run: true,
             loop: true,
             interruptible: true,
-            onFinish: closing ? () => this.setState({ closing: false }) : undefined
+            onFinish: closing
+              ? () => this.setState({ closing: false })
+              : undefined,
           }}
           rotation={[-rotation, 0, 0]}
           scale={[0.005, 0.005, 0.005]}
