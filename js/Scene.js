@@ -21,8 +21,8 @@ export default function Scene() {
       <ViroAmbientLight color="#aaaaaa" />
       <Marker
         target="qrcode"
-        source={require('./res/cafe.obj')}
-        resource={[require('./res/cafe.mtl')]}
+        source={require('./res/coffee.obj')}
+        resource={[require('./res/coffee.mtl')]}
       />
     </ViroARScene>
   );
